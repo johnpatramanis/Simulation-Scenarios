@@ -59,7 +59,11 @@ for line in VCF_file:
         counter+=1
         end=float(line[1])
         
-    if counter>=100:
-        print(np.asarray(CHUNK))
-        print(np.asarray(CHUNK).shape)
-        break
+        if end-begin>=1000000:
+        #Chunk is larger than 100000 base length ,write out to ms style
+            CHUNK=np.asarray(CHUNK)
+            print(CHUNK.shape)
+            CHUNK=[]
+            begin=end
+        if counter>=10000:
+            break
