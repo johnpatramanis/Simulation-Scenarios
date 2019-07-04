@@ -60,5 +60,6 @@ for line in VCF_file:
         end=float(line[1])
         
     if counter>=100:
-        print(CHUNK)
+        print(np.asarray(CHUNK))
+        print(np.asarray(CHUNK).shape)
         break
