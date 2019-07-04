@@ -26,7 +26,7 @@ MS_FILE=open('MS_FORMAT_OUT','w')
 NUM_INDIVID=args.numb_ind[0]
 
 
-def transfor_genotypes(genotypelist):
+def transform_genotypes(genotypelist):
     new_genotypelist=[]
     for geno in genotypelist:
         zygocity=geno.count('0')
@@ -44,18 +44,21 @@ def transfor_genotypes(genotypelist):
 
 begin=0
 counter=0
+CHUNK=[]
 for line in VCF_file:
     if line[0]!='#' and line[0]!='!' and line[0]!='\\':
     #only lines with genotypes
         line=line.strip().split()
         genotypes=line[9:]
         if len(genotypes)!=NUM_INDIVID:
+        #Error
             print('Number of Individuals not matching file!!!')
             break
-        
+        newgenotypes=transform_genotypes(genotypes)
+        CHUNK.append(newgenotypes)
         counter+=1
         end=float(line[1])
         
-        
     if counter>=100:
+        print(CHUNK)
         break
