@@ -31,8 +31,8 @@ for REPS in range(0,reps):
 
     generation_time = 25
 
-    T_split_OUT_AB=10000/generation_time
-    T_split_AB=5000/generation_time
+    T_split_OUT_AB=5000/generation_time
+    T_split_AB=700/generation_time
 
 
 
@@ -65,8 +65,8 @@ for REPS in range(0,reps):
         # A and B merge
         msprime.MassMigration(time=T_split_AB, source=2, destination=1, proportion=1.0),
         msprime.MigrationRateChange(time=T_split_AB, rate=0),
-        msprime.MigrationRateChange(time=T_split_AB, rate=m_OUT_AB, matrix_index=(0, 1)),
-        msprime.MigrationRateChange(time=T_split_AB, rate=m_OUT_AB, matrix_index=(1, 0)),
+        msprime.MigrationRateChange(time=T_split_AB, rate=0.0001, matrix_index=(0, 1)),
+        msprime.MigrationRateChange(time=T_split_AB, rate=0.0001, matrix_index=(1, 0)),
         msprime.PopulationParametersChange(time=T_split_AB, initial_size=N_AB, growth_rate=0, population_id=1),
         # Population AB merges into OUT
         msprime.MassMigration(time=T_split_OUT_AB, source=1, destination=0, proportion=1.0),
@@ -183,6 +183,6 @@ for REPS in range(0,reps):
 
     VCF.close
     newVCF.close
-
+    os.system('rm ms_prime*')
     os.system('mv newtotal_chroms.vcf total_chroms.vcf')
 
