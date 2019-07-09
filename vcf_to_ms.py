@@ -40,9 +40,9 @@ def transform_genotypes(genotypelist):
         if zygocity==2 and missingness==0:
             new_genotypelist.append(0)
             new_genotypelist.append(0)
-        if missingness!=0: #REQUIRES CORRECTION ###################################################################################################
-            new_genotypelist.append(0)
-            new_genotypelist.append(0)
+        if missingness!=0: #assing random genotype to missing values 
+            new_genotypelist.append(random.randint(0,1))
+            new_genotypelist.append(random.randint(0,1))
     return new_genotypelist
 
 #gather data,split to chunks ,transform them
@@ -66,8 +66,8 @@ for line in VCF_file:
         POSITIONS.append(line[1])
         counter+=1
         end=float(line[1])
-        if end-begin>=1000000 or begin>=end: #THIS REQUIRES CHANGE ##############################################################################
-        #Chunk is larger than 100000 base length or we switch chromosome,write out to ms style
+        if end-begin>=500000 or begin>=end:
+        #Chunk is larger than 500000 base length or we switch chromosome,write out to ms style
             CHUNK=np.asarray(CHUNK)
             CHUNK=np.transpose(CHUNK)
             ALL_CHUNKS.append(CHUNK)
