@@ -75,8 +75,7 @@ for line in VCF_file:
             POSITIONS=[]
             CHUNK=[]
             begin=end
-        if counter>=10000:
-            break
+
 
 
 #Write to ms file
@@ -95,3 +94,5 @@ for CHUNK in ALL_CHUNKS:
         MS_FILE.write(atomo+'\n')
     MS_FILE.write('\n')
     counter+=1
+    
+os.system('CoMuStats -input {} -npop 3 20 20 20 -ms > COMUSTATS_OUT'.format('MS_FORMAT_OUT'))
