@@ -96,3 +96,4 @@ for CHUNK in ALL_CHUNKS:
     counter+=1
     
 os.system('CoMuStats -input {} -npop 3 20 20 20 -ms > COMUSTATS_OUT'.format('MS_FORMAT_OUT'))
+os.system('Rscript comustats_prepare_for_ABC.R')
