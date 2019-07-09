@@ -56,4 +56,3 @@ for (c in 1:length(newcomusdistributions)){
   }
 }
 
-cat('',file='SAMPLE_FOR_ABC',append=TRUE,sep='\n')
