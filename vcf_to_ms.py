@@ -40,7 +40,7 @@ def transform_genotypes(genotypelist):
         if zygocity==2 and missingness==0:
             new_genotypelist.append(0)
             new_genotypelist.append(0)
-        if missingness!=0: #REQUIRES CORRECTION
+        if missingness!=0: #REQUIRES CORRECTION ###################################################################################################
             new_genotypelist.append(0)
             new_genotypelist.append(0)
     return new_genotypelist
@@ -63,21 +63,35 @@ for line in VCF_file:
             break
         newgenotypes=transform_genotypes(genotypes)
         CHUNK.append(newgenotypes)
+        POSITIONS.append(line[1])
         counter+=1
         end=float(line[1])
-        if end-begin>=1000000 or begin>=end:
+        if end-begin>=1000000 or begin>=end: #THIS REQUIRES CHANGE ##############################################################################
         #Chunk is larger than 100000 base length or we switch chromosome,write out to ms style
             CHUNK=np.asarray(CHUNK)
             CHUNK=np.transpose(CHUNK)
             ALL_CHUNKS.append(CHUNK)
+            ALL_POSITIONS.append(POSITIONS)
+            POSITIONS=[]
             CHUNK=[]
             begin=end
         if counter>=10000:
             break
+
+
 #Write to ms file
-            
+counter=0
+#initial line
+MS_FILE.write('ms {} {}\n{} {} {}\n'.format(NUM_INDIVID,len(ALL_CHUNKS),random.randint(0,10000),random.randint(0,10000),random.randint(0,10000)))
+
 for CHUNK in ALL_CHUNKS:
+    MS_FILE.write("\n")
+    MS_FILE.write("//\n")
+    MS_FILE.write("segsites: {}\n".format(CHUNK.shape[1]))
+    MS_FILE.write("positions: {}\n".format(' '.join(ALL_POSITIONS[counter])))
+    
     for atomo in CHUNK:
-        atomo=np.array2string(atomo)[1:-1]
+        atomo=''.join([str(e) for e in atomo])
         MS_FILE.write(atomo+'\n')
-     MS_FILE.write()
+    MS_FILE.write('\n')
+    counter+=1
