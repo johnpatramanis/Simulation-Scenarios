@@ -20,7 +20,6 @@ for REPS in range(0,reps):
 #Simulation Parameters
     
     parametersfile=open('PARAMETERS_{}'.format(REPS),'w')
-    N_OG=2000
     N_OUT=2000
     N_AB=2000
     N_A0=2000
